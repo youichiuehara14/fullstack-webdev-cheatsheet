@@ -1,14 +1,19 @@
-//#1 Unpacking (Spread) with Array
+// ==========================================================
+// #1 - Unpacking Arrays using Spread Operator
+// ==========================================================
+
 const arrNum = [1, 2, 3, 4, 5];
 
-// Using spread operator to copy the array
-const unpack = [...arrNum];
+const unpackedArray = [...arrNum]; // Spread operator creates a shallow copy of the array
 
-console.log(unpack); // [1, 2, 3, 4, 5]
+console.log('Unpacked Array:', unpackedArray); // Unpacked Array: [1, 2, 3, 4, 5]
 
-//-------------------------------------------------------------
+// ----------------------------------------------------------
 
-//#2 Unpacking (Spread) with Object
+// ==========================================================
+// #2 - Unpacking Objects using Spread Operator
+// ==========================================================
+
 const objectSample = {
   firstName: 'John',
   lastName: 'Doe',
@@ -16,36 +21,26 @@ const objectSample = {
   country: 'Philippines',
 };
 
-// Using spread operator to copy the object
-const storeObject = { ...objectSample };
+const copiedObject = { ...objectSample }; // Spread operator creates a shallow copy of the object
 
-console.log(storeObject);
-/*
-{
-  firstName: 'John',
-  lastName: 'Doe',
-  age: 28,
-  country: 'Philippines'
-}
-*/
+console.log('Copied Object:', copiedObject); // Copied Object: { firstName: 'John', lastName: 'Doe', age: 28, country: 'Philippines' }
 
-//-------------------------------------------------------------
+// ----------------------------------------------------------
 
-//#3 Shallow Copy vs Deep Copy
+// ==========================================================
+// #3 - Shallow Copy vs Deep Copy
+// ==========================================================
 
-//! Shallow Copy – Example #1 (Top-level properties)
+// Example 1 - Shallow Copy with Top-Level Properties
 const original = { name: 'Floran' };
 
-// Shallow copy creates a new object for top-level properties
 const shallowCopy = { ...original };
-
-// Modifying the shallow copy's property
 shallowCopy.name = 'Max';
 
-console.log(original); // { name: 'Floran' } – original not affected
-console.log(shallowCopy); // { name: 'Max' } – modified copy
+console.log('Original (Top-Level):', original); // { name: 'Floran' }
+console.log('Shallow Copy (Modified):', shallowCopy); // { name: 'Max' }
 
-//! Shallow Copy – Example #2 (Nested objects)
+// Example 2 - Shallow Copy with Nested Objects
 const uniqueData = {
   name: 'Jane',
   location: {
@@ -55,58 +50,29 @@ const uniqueData = {
   },
 };
 
-// This is still a shallow copy – only the top-level is copied
 const shallowNestedCopy = { ...uniqueData };
 
-// Changing nested property in the copy
 shallowNestedCopy.location.city = 'Sta. Rosa';
-shallowNestedCopy.name = 'Youichi';
+shallowNestedCopy.name = 'Smith';
 
-console.log(uniqueData);
-/*
-{
-  name: 'Jane',                   name remains unchanged
-  location: {
-    country: 'Philippines',
-    province: 'Laguna',
-    city: 'Sta. Rosa'             city changed in both objects
-  }
-}
-*/
+console.log('Original (Nested Modified):', uniqueData); // { name: 'Jane', location: { country: 'Philippines', province: 'Laguna', city: 'Sta. Rosa' } }
 
-// Why? Because `location` is an object, and it was copied **by reference**,
-// so both `uniqueData` and `shallowNestedCopy` share the same nested object.
+console.log('Shallow Copy (Nested Modified):', shallowNestedCopy); // { name: 'Smith', location: { country: 'Philippines', province: 'Laguna', city: 'Sta. Rosa' } }
 
-//-------------------------------------------------------------
+// Note: Nested objects are still shared (reference), not fully copied
 
-//#4 Deep Copy Example (real deep clone)
+// ----------------------------------------------------------
+
+// ==========================================================
+// #4 - Deep Copy using JSON methods
+// ==========================================================
+
 const realDeepCopy = JSON.parse(JSON.stringify(uniqueData));
 
-// This time we change a nested property
-realDeepCopy.location.province = 'Youichi';
+realDeepCopy.location.province = 'Smith';
 
-console.log(uniqueData);
-/*
-{
-  name: 'Jane',
-  location: {
-    country: 'Philippines',
-    province: 'Laguna',
-    city: 'Sta. Rosa'
-  }
-}
-*/
+console.log('Original after Deep Copy:', uniqueData); // { name: 'Jane', location: { country: 'Philippines', province: 'Laguna', city: 'Sta. Rosa' } }
 
-console.log(realDeepCopy);
-/*
-{
-  name: 'Jane',
-  location: {
-    country: 'Philippines',
-    province: 'Youichi',
-    city: 'Sta. Rosa'
-  }
-}
-*/
+console.log('Deep Copy (Modified):', realDeepCopy); // { name: 'Jane', location: { country: 'Philippines', province: 'Smith', city: 'Sta. Rosa' } }
 
-//Deep copy creates a fully independent clone – even nested properties are safe!
+// Deep copy creates a fully independent clone, including nested objects
