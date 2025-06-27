@@ -27,6 +27,7 @@ console.log(quote.split(' ')); // Output ==> ["It's", 'never', 'too', 'late', 't
 
 const num = 123456789;
 const arrNumString = String(num).split('');
+console.log(String(num).split(''));
 console.log(arrNumString); // Output ==>[ '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
 
 // You can also use the .map method to iterate each item and convert it into a different value type
